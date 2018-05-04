@@ -1,0 +1,28 @@
+<div class="container">
+<div class="jumbotron">
+    <h2>Login Form</h2>
+    <form #loginForm="ngForm" (ngSubmit)="loginFields()">
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" #nameRef="ngModel" minlength="4" class="form-control" placeholder="Username" name="name" ngModel />
+            <div *ngIf="nameRef.errors && (name.dirty || name.touched)" class="alert alert-danger">
+              <div [hidden]="!nameRef.errors.required">
+                please enter name
+           </div>
+        </div>
+      </div>
+        <div class="form-group">
+            <label >Password</label>
+            <input type="password" #nameRef="ngModel" required class="form-control" placeholder="Password" name="password" ngModel />
+
+        </div>
+        <div >
+
+			<button [disabled]="loading" (click)="loginFields()"  class="btn btn-primary">Login</button>
+
+
+              </div>
+    </form>
+	</div>
+	</div>
