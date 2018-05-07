@@ -20,6 +20,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfComponent } from './components/pdf.component';
 import { ImageViewerModule } from 'ng2-image-viewer';
 import { ImageViewerComponent } from './components/image-viewer.component';
+import { UploadService } from './service/upload.service';
 //import { FileUpload } from 'ng2-fileupload';
 //import { FileUpload } from 'ng2-fileupload';
 @NgModule({
@@ -29,7 +30,7 @@ import { ImageViewerComponent } from './components/image-viewer.component';
   imports: [
     BrowserModule,FormsModule,HttpModule,ReactiveFormsModule,routing,DataTablesModule,PdfViewerModule,ImageViewerModule,NgbModule.forRoot()
   ],
-  providers: [UserService,DocumentInfoService,AlbumService,TodoService],
+  providers: [UserService,DocumentInfoService,AlbumService,TodoService,UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

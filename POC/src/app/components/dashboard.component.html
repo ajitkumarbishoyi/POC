@@ -136,11 +136,21 @@ overflow-y: scroll;
 <div id="col1">
 <div id="rect1">
 
-       <div>
-         <h2>File Upload</h2>
-          <input #fileInput (change)="fileUpload($event)" type="file" id="file" >
-          <button type="button" (click)="onUpload()">upload</button>
-       </div>
+  <div class="container">
+<h1><a href="./">{{title}}</a></h1>
+<br>
+<form id='formData' #formdata method="post" enctype="multipart/form-data">
+ <input id="file" #data type="file" name="file" (change)="getFiles(data)">
+ <br>
+ <input #upload type="submit" value="Upload" class="btn btn-info pull-left" (click)="postfile();">
+</form>
+<div *ngIf="successMsg">
+ <h4 class="text-success">{{successMsg}}</h4>
+</div>
+<div *ngIf="errorMsg">
+ <h4 class="text-danger">{{errorMsg}}</h4>
+</div>
+</div>
 
 
 
@@ -182,23 +192,31 @@ overflow-y: scroll;
                   style="display: block;"
       ></pdf-viewer>
 
+      <div style="margin-left:100%;">
+        <h6>Image Upload</h6>
+        <input type='file'  (change)="readUrl($event)">
+        <img [src]="url">
+
+      </div>
+
+      <div style="margin-left:100%;">
+        <h6>Txt Upload</h6>
+        <input id="file-upload"
+      type="file"
+      accept=".txt"
+      (change)="fileUpload($event)">
+
+      {{fileText}}
+
+      </div>
 
 </div>
 <div id="rect4">
   <button style="margin-left:100%;margin-top:-180%;" (click)="getDisplayEmail()">Email</button>
   <h4>Email Information</h4>
-  <div style="margin-left:100%;">
-    <input type='file'  (change)="readUrl($event)">
-    <img [src]="url">
 
-  </div>
 
-  <input id="file-upload"
-type="file"
-accept=".txt"
-(change)="fileUpload($event)">
 
-{{fileText}}
 
 </div>
 </div>

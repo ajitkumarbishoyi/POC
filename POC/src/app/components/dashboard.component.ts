@@ -13,6 +13,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule, DomSanitizer,SafeResourceUrl} from '@angular/platform-browser'
 
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
+import { UploadService } from '../service/upload.service';
 //const uploadURL = 'https://localhost:4200/assets/store';
 
 //import {DataTableModule} from "angular2-datatable";
@@ -50,6 +51,10 @@ export class DashBoardComponent implements OnInit {
   private fileText;
 //  posts;
   //title = 'app';
+  file = null;
+    successMsg= null;
+    errorMsg= null;
+    error = null;
   constructor(
       private route: ActivatedRoute,
       private router: Router,
@@ -62,7 +67,8 @@ export class DashBoardComponent implements OnInit {
 //  private rd: Renderer2,
   private http: Http,
 //  private el: ElementRef,
-  private activeModal: NgbActiveModal
+  private activeModal: NgbActiveModal,
+  private uploadService:UploadService
 
     )
     {
@@ -187,6 +193,23 @@ new Angular2Csv(csvData, 'MyUploadReport',options);
 }
 
 
+getFiles(files: any) {
+  let empDataFiles: FileList = files.files;
+        this.file = empDataFiles[0];
+    }
+
+    postfile() {
+      
+            if (this.file !== undefined) {
+                this.uploadService.postFormData(this.file).map(responce => {
+                }).catch( error =>
+                    this.errorMsg = "Failed to Upload File"
+                );
+                this.successMsg = "Successfully uploaded !!";
+            } else {
+                this.errorMsg = "Failed to Upload File";
+            }
+        }
 
 
 
