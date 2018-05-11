@@ -21,6 +21,7 @@ import { PdfComponent } from './components/pdf.component';
 import { ImageViewerModule } from 'ng2-image-viewer';
 import { ImageViewerComponent } from './components/image-viewer.component';
 import { UploadService } from './service/upload.service';
+import { DocumentService } from './service/document.service';
 //import { FileUpload } from 'ng2-fileupload';
 //import { FileUpload } from 'ng2-fileupload';
 @NgModule({
@@ -30,7 +31,7 @@ import { UploadService } from './service/upload.service';
   imports: [
     BrowserModule,FormsModule,HttpModule,ReactiveFormsModule,routing,DataTablesModule,PdfViewerModule,ImageViewerModule,NgbModule.forRoot()
   ],
-  providers: [UserService,DocumentInfoService,AlbumService,TodoService,UploadService],
+  providers: [UserService,DocumentInfoService,AlbumService,TodoService,UploadService,DocumentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

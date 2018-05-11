@@ -14,6 +14,8 @@ import {BrowserModule, DomSanitizer,SafeResourceUrl} from '@angular/platform-bro
 
 import { Http, RequestOptions, Headers, Response } from '@angular/http';
 import { UploadService } from '../service/upload.service';
+import { DocumentService } from '../service/document.service';
+import { DocumentStore}  from '../models/documentstore';
 //const uploadURL = 'https://localhost:4200/assets/store';
 
 //import {DataTableModule} from "angular2-datatable";
@@ -39,9 +41,9 @@ export class DashBoardComponent implements OnInit {
   selectedfile=null;
 //  @ViewChild('fileInput') el:ElementRef;
   page:number=1;
-  pdfSrc:string='C:\Users\Ajit.Bishoyi\Desktop';
+  pdfSrc:string='';
   url:string='';
-
+ empDataFiles='';
   posts;
   albums;
   todos;
@@ -55,6 +57,7 @@ export class DashBoardComponent implements OnInit {
     successMsg= null;
     errorMsg= null;
     error = null;
+    documentStore: any = { documentID: 'documentName', documentType: 'documentPath'  };
   constructor(
       private route: ActivatedRoute,
       private router: Router,
@@ -68,8 +71,8 @@ export class DashBoardComponent implements OnInit {
   private http: Http,
 //  private el: ElementRef,
   private activeModal: NgbActiveModal,
-  private uploadService:UploadService
-
+  private uploadService:UploadService,
+  private documentService:DocumentService
     )
     {
     userService.getUsers().subscribe(p=>this.users = p);
@@ -83,12 +86,12 @@ export class DashBoardComponent implements OnInit {
   //this.location.back();
 }
 displayData()  :void {
-  alert('ajit');
+
 
    this.router.navigate(['dashboard']);
 }
 getDisplayID(): void {
-  alert('ajit');
+
   //alert(id);
         this.documentInfoService.getDocumentInfo().subscribe(posts => this.posts = posts);
       //  this.dtTrigger.next();
@@ -97,7 +100,7 @@ getDisplayID(): void {
 
 
     getDisplayName(): void {
-      alert("New Method");
+
       //alert(id);
             this.albumService.getAlbums().subscribe(albums => this.albums = albums);
           //  this.dtTrigger.next();
@@ -105,39 +108,67 @@ getDisplayID(): void {
         }
 
         getTodos(): void {
-          alert("New Method");
+
           //alert(id);
                 this.todoService.getTodos().subscribe(todos => this.todos = todos);
               //  this.dtTrigger.next();
                 this.router.navigate(['dashboard']);
             }
       onFileSelected(event:any){
-       var img: any = document.querySelector('#file');
+
+      var img: any = document.querySelector('#file');
+
        //alert('files 1' +img);
          if (typeof (FileReader) !== 'undefined') {
-             alert('files 2'+FileReader);
+
           var reader = new FileReader();
 
           reader.onload = (event: any) => {
           this.pdfSrc = event.target.result;
-        //  alert('files 3'+event.target.result);
+
           }
 
           reader.readAsArrayBuffer(event.target.files[0]);
+
+//this.getFiles(img);
           }
           }
 
 
           readUrl(event:any) {
-            if (event.target.files && event.target.files[0]) {
-              var reader = new FileReader();
+            if ((event.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/) )) {
+              var img: any = document.querySelector('#file');
 
-              reader.onload = (event:any) => {
+            var reader = new FileReader();
+            reader.onload = (event:any) => {
+
                 this.url = event.target.result;
+
               }
 
               reader.readAsDataURL(event.target.files[0]);
             }
+            else{
+
+              var img: any = document.querySelector('#file');
+
+
+                 if (typeof (FileReader) !== 'undefined') {
+
+                  var reader = new FileReader();
+
+                  reader.onload = (event: any) => {
+                  this.pdfSrc = event.target.result;
+
+                  }
+
+                  reader.readAsArrayBuffer(event.target.files[0]);
+
+                    }
+            }
+
+this.getFiles(img);
+
           }
 
 
@@ -169,9 +200,6 @@ getDisplayID(): void {
   }
 
 addTodo(titleid:string,titlename:string,titletype:string){
-alert(titleid);
-alert(titlename);
-alert(titletype);
 
 var csvData = [
 {
@@ -185,33 +213,41 @@ quoteStrings: '"',
 decimalseparator: '.',
 showLabels: true,
 showTitle: true,
-headers: ['DocumentID','DocumentID','DocumentType']
+headers: ['DocumentID','DocumentName','DocumentType','FileLocation']
 };
-new Angular2Csv(csvData, 'MyUploadReport',options);
+const file =new Angular2Csv(csvData, 'MyUploadReport',options);
 
 
 }
 
 
 getFiles(files: any) {
-  let empDataFiles: FileList = files.files;
+
+
+ var empDataFiles: FileList = files.files;
         this.file = empDataFiles[0];
+
+
     }
 
     postfile() {
-      
+
+
             if (this.file !== undefined) {
                 this.uploadService.postFormData(this.file).map(responce => {
                 }).catch( error =>
                     this.errorMsg = "Failed to Upload File"
                 );
-                this.successMsg = "Successfully uploaded !!";
+                 this.successMsg = "Successfully uploaded !!";
+
             } else {
                 this.errorMsg = "Failed to Upload File";
             }
         }
 
-
+         save(): void {
+        this.documentService.create(this.documentStore);
 
 
   }
+}

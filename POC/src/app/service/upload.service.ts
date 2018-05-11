@@ -33,11 +33,14 @@ export class UploadService {
             }
             xhr.open("POST", this.baseUrl + 'employee/uploaddata', true);
             xhr.send(formData)
+
         }));
     }
 
     callBackendAPI(url: string, httpMethod: string, params: URLSearchParams, headers: Headers, body: string): Promise<any> {
+      alert('ajit');
         switch (httpMethod) {
+
 
             case 'get':
                 return this.http.get(this.baseUrl + url, { search: params }).toPromise()

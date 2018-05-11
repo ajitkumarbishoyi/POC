@@ -16,10 +16,10 @@ height: 100%;
 
 #rect1 {
 background-color:white;
- border: 10px solid gray;
+ border: 1px solid gray;
 width: 100%;
 height:100%;
-padding-top: 110px;
+padding-top: 500px;
 padding-right: 100px;
 padding-bottom: 250px;
 padding-left: 120px;
@@ -31,10 +31,10 @@ overflow-y: scroll;
 
 #rect2 {
 background-color:white;
- border: 10px solid gray;
+ border: 1px solid gray;
 width: 100%;
 height: 100%;
-padding-top: 110px;
+padding-top: 500px;
 padding-right: 100px;
 padding-bottom: 250px;
 padding-left: 120px;
@@ -44,35 +44,6 @@ min-height: 150px;
 overflow-y: scroll;
 }
 
-#rect3 {
-background-color:white;
-border: 10px solid gray;
-width: 100%;
-height: 100%;
-padding-top: 110px;
-padding-right: 100px;
-padding-bottom: 250px;
-padding-left: 100px;
-margin: 0px;
-max-height: 200px;
-min-height: 150px;
-overflow-y: scroll;
-}
-
-#rect4 {
-background-color: white;
-border: 10px solid gray;
-width: 100%;
-height: 50%;
-padding-top: 110px;
-padding-right: 100px;
-padding-bottom: 250px;
-padding-left: 100px;
-margin: 0px;
-max-height: 200px;
-min-height: 150px;
-overflow-y: scroll;
-}
 
 #AlertDiv h1 {
     margin:auto;
@@ -84,7 +55,7 @@ overflow-y: scroll;
 </style>
 <ngb-tabset #t="ngbTabset">
   <ngb-tab>
-    <ng-template ngbTabTitle><b>Warning</b> Tab</ng-template>
+    <ng-template ngbTabTitle><b>View Docuemnts</b></ng-template>
     <ng-template ngbTabContent>
       <p>This is the content of the first tab!</p>
         <ngb-alert [dismissible]="false">
@@ -92,43 +63,12 @@ overflow-y: scroll;
         </ngb-alert>
     </ng-template>
   </ngb-tab>
-  <ngb-tab>
-    <ng-template ngbTabTitle><b>ProgressBar</b> Tab</ng-template>
-    <ng-template ngbTabContent>
-      <p>This is the content of the second tab!</p>
-      <p><ngb-progressbar type="success" [value]="25"></ngb-progressbar></p>
-<p><ngb-progressbar type="info" [value]="50"></ngb-progressbar></p>
-<p><ngb-progressbar type="warning" [value]="75"></ngb-progressbar></p>
-<p><ngb-progressbar type="danger" [value]="100"></ngb-progressbar></p>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab  [disabled]="true">
-    <ng-template ngbTabTitle><b>Disabled</b> Tab</ng-template>
-    <ng-template ngbTabContent>
-      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi. Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio. Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab>
-    <ng-template ngbTabTitle><b>Collapse</b> Tab</ng-template>
-    <ng-template ngbTabContent>
-      <p>
-  <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
-          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-    Toggle
-  </button>
-</p>
-<div id="collapseExample" [ngbCollapse]="isCollapsed">
-  <div class="card">
-    <div class="card-body">
-      You can collapse this card by clicking Toggle
-    </div>
-  </div>
-</div>
-    </ng-template>
-  </ngb-tab>
+
+
+
 
   <ngb-tab id="tab-selectbyid1">
-    <ng-template ngbTabTitle><b>RestService</b> Tab</ng-template>
+    <ng-template ngbTabTitle><b>Index Document</b></ng-template>
     <ng-template ngbTabContent>
 
 
@@ -140,7 +80,7 @@ overflow-y: scroll;
 <h1><a href="./">{{title}}</a></h1>
 <br>
 <form id='formData' #formdata method="post" enctype="multipart/form-data">
- <input id="file" #data type="file" name="file" (change)="getFiles(data)">
+ <input id="file" #event type="file" name="file" (change)="readUrl($event)">
  <br>
  <input #upload type="submit" value="Upload" class="btn btn-info pull-left" (click)="postfile();">
 </form>
@@ -149,40 +89,44 @@ overflow-y: scroll;
 </div>
 <div *ngIf="errorMsg">
  <h4 class="text-danger">{{errorMsg}}</h4>
+
+
 </div>
 </div>
 
 
 
-<label>DocumentID</label>
-<input type="text"  minlength="4" class="form-control" placeholder="DocumentID" #titleid  />
-<label>DocumentName</label>
-<input type="text"  minlength="4" class="form-control" placeholder="DocumentName" #titlename  />
-<label>DocumentType</label>
-<input type="text"  minlength="4" class="form-control" placeholder="DocumentType" #titletype  />
+<h6>Create Customer Form</h6>
 
-<button type="button" class="btn btn-outline-primary" (click) = 'addTodo(titleid.value,titlename.value,titletype.value)'>IndexDoc</button>
-</div>
-<div id="rect3">
+    <form>
+      <div class="form-group">
+        <label for="documentID">DocumentID</label>
+        <input type="text" class="form-control" id="documentID" required
+        [(ngModel)]="documentStore.documentID" name="documentID">
+      </div>
 
-  <button style="margin-left:100%;margin-top:-180%;" (click)="getDisplayName()">Albums</button>
+      <div class="form-group">
+        <label for="documentName">DocumentName</label>
+        <input type="text" class="form-control" id="documentName" required
+        [(ngModel)]="documentStore.documentName" name="documentName">
+      </div>
 
-  <h6 >Name Information</h6>
-  <li *ngFor="let albumsData of albums">
+      <div class="form-group">
+        <label for="documentType">DocumentType</label>
+        <input type="text" class="form-control" id="documentType" required
+        [(ngModel)]="documentStore.documentType" name="documentType">
+      </div>
 
-  {{albumsData.title}}
-  </li>
-</div>
+      <button type="button" class="btn btn-outline-primary" (click) = 'save()'>IndexDoc</button>
+    </form>
+  </div>
+
 </div>
 <div id="col2">
   <div id="rect2">
 
 
-    <div style="margin-left:100%;">
-       <label>PDF src</label>
-       <input type="file" id="file" (change)="onFileSelected($event)" />
-<input type="text" placeholder="PDF src" id="page" [(ngModel)]="page">
-    </div>
+
     <pdf-viewer [src]="pdfSrc"
                   [render-text]="true"
                   [page]="page"
@@ -192,12 +136,11 @@ overflow-y: scroll;
                   style="display: block;"
       ></pdf-viewer>
 
-      <div style="margin-left:100%;">
-        <h6>Image Upload</h6>
-        <input type='file'  (change)="readUrl($event)">
+
+
         <img [src]="url">
 
-      </div>
+
 
       <div style="margin-left:100%;">
         <h6>Txt Upload</h6>
@@ -211,14 +154,7 @@ overflow-y: scroll;
       </div>
 
 </div>
-<div id="rect4">
-  <button style="margin-left:100%;margin-top:-180%;" (click)="getDisplayEmail()">Email</button>
-  <h4>Email Information</h4>
 
-
-
-
-</div>
 </div>
     </ng-template>
   </ngb-tab>
